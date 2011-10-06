@@ -1,4 +1,3 @@
-
 package :passenger, :provides => :appserver do
   description 'Phusion Passenger'
   version '3.0.9'
