@@ -11,22 +11,24 @@ policy :stack, :roles => :app do
   requires :tools                   # Common system tools and dependencies
   requires :ssh
 
-  requires :deployer                # default: deployer/deployer
+  # requires :deployer                # default: deployer/deployer
   requires :firewall                # iptables
   requires :shell                   # ZSH
   requires :scm                     # Git
 
   requires :ruby                    # RVM: REE + 1.9.2 + Bundler
-  # requires :appserver               # Passenger
+  requires :appserver               # Passenger
   requires :webserver               # Nginx
   requires :mailserver              # Postfix
   requires :database                # MySQL or Postgres, also installs rubygems for each
 
-  # requires :memorystore             # Memcached
-  # requires :process_monitoring      # Monit
-  # requires :http_proxy              # Varnish
-  # requires :bruteforce_protection   # Fail2ban
-  # requires :logrotate
+  requires :memorystore             # Memcached
+  requires :process_monitoring      # Monit
+  requires :http_proxy              # Varnish
+  requires :bruteforce_protection   # Fail2ban
+  requires :logrotate
+
+  # requires :video
 
   requires :cleanup
 end
@@ -49,9 +51,9 @@ deployment do
 
     vars = {
       :app      => {:label => ":app, host domain/IP",     :default => nil},
-      :deployer => {:label => ":deployer, deploy-user",   :default => 'deployer'},
+      :deployer => {:label => ":deployer, deploy-user",   :default => 'tc'},
       :user     => {:label => ":root, setup-user",        :default => 'root'},
-      :group    => {:label => ":group, deployers-group",  :default => 'deployer'}
+      :group    => {:label => ":group, deployers-group",  :default => 'tc'}
     }
 
     # Ensure defined - if not, then ask.
@@ -74,7 +76,7 @@ deployment do
   # Source based package installer defaults.
   source do
     prefix   '/usr/local'
-    archives '/usr/local/sources'
+    archives '/usr/local/src'
     builds   '/usr/local/build'
   end
 end

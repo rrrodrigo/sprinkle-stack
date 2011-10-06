@@ -84,7 +84,7 @@ end
 package :imagemagick do
   description 'imagemagick'
 
-  apt 'imagemagick'
+  apt 'imagemagick libfreetype6-dev xml-core'
 
   verify do
     has_executable '/usr/bin/convert'
